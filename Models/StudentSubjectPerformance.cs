@@ -23,13 +23,11 @@ namespace SchoolManagementSystem.Models
         public int SubjectId { get; set; }
 
         // Tutor and Peer Helper
-        public int? TutorId { get; set; }
         public int? PeerHelperId { get; set; } // links to another Student
 
         // Navigation
         public Student Student { get; set; }
         public Subject Subject { get; set; }
-        public Tutor Tutor { get; set; }
         public Student PeerHelper { get; set; }
 
         [Timestamp]

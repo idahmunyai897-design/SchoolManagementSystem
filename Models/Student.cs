@@ -8,6 +8,9 @@ namespace SchoolManagementSystem.Models
         [Key]
         public int StudentId { get; set; }
 
+        [Required, StringLength(255)]
+        public string Password { get; set; }  // store hashed password
+
         [Required, StringLength(100)]
         public string FullNames { get; set; }
 
@@ -34,6 +37,8 @@ namespace SchoolManagementSystem.Models
 
         [Required, StringLength(10)]
         public string GradeLevel { get; set; }
+        [StringLength(50)]
+        public string Role { get; set; } = "Student";
 
         // Grade 10 Major / Track
         public int? MajorId { get; set; }  // Nullable for students not in Grade 10 yet

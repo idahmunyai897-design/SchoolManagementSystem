@@ -8,6 +8,9 @@ namespace SchoolManagementSystem.Models
         [Key]
         public int TutorId { get; set; }
 
+        [Required, StringLength(255)]
+        public string Password { get; set; }  // store hashed password
+
         [Required, StringLength(100)]
         public string FullNames { get; set; }
 
@@ -28,6 +31,8 @@ namespace SchoolManagementSystem.Models
 
         [StringLength(200)]
         public string Address { get; set; }
+        [StringLength(50)]
+        public string Role { get; set; } = "Tutor";
 
         // Navigation
         public ICollection<TutorAssignment> TutorAssignments { get; set; }

@@ -8,6 +8,9 @@ namespace SchoolManagementSystem.Models
         [Key]
         public int TeacherId { get; set; }
 
+        [Required, StringLength(255)]
+        public string Password { get; set; }  // store hashed password
+
         [Required, StringLength(100)]
         public string FullNames { get; set; }
 
@@ -31,6 +34,8 @@ namespace SchoolManagementSystem.Models
 
         [Required, StringLength(10)]
         public string Grade { get; set; }
+        [StringLength(50)]
+        public string Role { get; set; } = "Teacher";
 
         // Navigation
         public ICollection<StudentSubjectPerformance> StudentSubjectPerformances { get; set; }
