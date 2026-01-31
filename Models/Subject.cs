@@ -7,11 +7,12 @@ namespace SchoolManagementSystem.Models
     {
         [Key]
         public int SubjectId { get; set; }
+
+        [Required, StringLength(100)]
         public string SubjectName { get; set; }
 
-        //Navigation Property
-        public int StudentId { get; set; }  
-        public Student Student { get; set; }
+        // Navigation
         public ICollection<StudentSubjectPerformance> StudentSubjectPerformances { get; set; }
+        public ICollection<TutorAssignment> TutorAssignments { get; set; }
     }
 }

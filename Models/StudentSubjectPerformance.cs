@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-#nullable disable
+﻿#nullable disable
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolManagementSystem.Models
 {
@@ -7,14 +8,31 @@ namespace SchoolManagementSystem.Models
     {
         [Key]
         public int StudentSubjectPerformanceId { get; set; }
-        public string StudentPerformanceLevel { get; set; }
-        public string TeacherPerformanceLevel { get; set; }
+
+        [Required, StringLength(50)]
+        public string StudentPerformanceLevel { get; set; }  // Struggling / Good
+
+        [Required, StringLength(50)]
+        public string TeacherPerformanceLevel { get; set; }  // Teacher evaluation
+
+        [DataType(DataType.Date)]
         public DateTime DateRecorded { get; set; }
 
-        //Navigation Property
+        // Foreign Keys
         public int StudentId { get; set; }
-        public Student Student { get; set; }
         public int SubjectId { get; set; }
+
+        // Tutor and Peer Helper
+        public int? TutorId { get; set; }
+        public int? PeerHelperId { get; set; } // links to another Student
+
+        // Navigation
+        public Student Student { get; set; }
         public Subject Subject { get; set; }
+        public Tutor Tutor { get; set; }
+        public Student PeerHelper { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }
