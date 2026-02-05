@@ -6,7 +6,7 @@ using SchoolManagementSystem.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext for EF Core
-builder.Services.AddDbContext<SchoolContext>(options =>
+builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //// Add Identity for login/authentication

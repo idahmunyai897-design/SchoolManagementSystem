@@ -7,10 +7,10 @@ namespace SchoolManagementSystem.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly SchoolContext _context;
+        private readonly SchoolDbContext _context;
 
         // Constructor: gives the controller access to the database
-        public StudentController(SchoolContext context)
+        public StudentController(SchoolDbContext context)
         {
             _context = context;
         }

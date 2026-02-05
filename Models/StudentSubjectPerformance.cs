@@ -24,6 +24,8 @@ namespace SchoolManagementSystem.Models
 
         // Tutor and Peer Helper
         public int? PeerHelperId { get; set; } // links to another Student
+        public string Comments { get; set; }
+        public double Score { get; set; }
 
         // Navigation
         public Student Student { get; set; }

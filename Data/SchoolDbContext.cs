@@ -5,9 +5,9 @@ using System.Reflection.Emit;
 
 namespace SchoolManagementSystem.Data
 {
-    public class SchoolContext : DbContext
+    public class SchoolDbContext : DbContext
     {
-        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
+        public SchoolDbContext(DbContextOptions<SchoolDbContext> options) : base(options) { }
 
         // DbSets
         public DbSet<Student> Students { get; set; }
@@ -146,3 +146,4 @@ namespace SchoolManagementSystem.Data
         }
     }
 }
+

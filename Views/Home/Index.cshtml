@@ -1,8 +1,101 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Banyai Technical High School";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Hero section with landscape background */
+    .hero {
+        background-image: url('@Url.Content("~/images/Picture.jpg")');
+        background-size: cover; /* cover ensures the image fills width & height */
+        background-position: center center; /* center both horizontally and vertically */
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Logo on top */
+    .hero .logo {
+        width: 150px; /* adjust as needed */
+        margin-bottom: 20px;
+    }
+
+    /* Welcome text */
+    .hero h1 {
+        font-size: 40px;
+        text-shadow: 2px 2px 5px black;
+        margin-bottom: 30px;
+        white-space: pre; /* keeps line breaks for WELCOME TO \n BANYAI TECHNICAL HIGH SCHOOL */
+    }
+
+    /* Sign in button */
+    .hero button {
+        padding: 15px 30px;
+        font-size: 18px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .hero button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Make it responsive */
+    @@media (max-width: 768px) {
+        .hero h1 {
+            font-size: 30px;
+        }
+        .hero .logo {
+            width: 100px;
+        }
+        .hero button {
+            padding: 12px 25px;
+            font-size: 16px;
+        }
+    }
+</style>
+
+<div class="hero">
+ 
+
+    <!-- Welcome text animation -->
+    <h1 id="welcomeText"></h1>
+
+    <!-- Sign in button -->
+    <form asp-controller="Account" asp-action="Login" method="get">
+        <button type="submit">Sign In</button>
+    </form>
 </div>
+
+<script>
+    // Text to show
+    const text = "WELCOME TO:\nBANYAI TECHNICAL HIGH SCHOOL";
+    const target = document.getElementById("welcomeText");
+    let i = 0;
+
+    function typeWriter() {
+        if (i < text.length) {
+            target.innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50); // 50ms per letter, change for speed
+        }
+    }
+
+    window.onload = typeWriter;
+</script>

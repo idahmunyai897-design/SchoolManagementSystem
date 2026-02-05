@@ -11,8 +11,8 @@ using SchoolManagementSystem.Data;
 
 namespace SchoolManagementSystem.Migrations
 {
-    [DbContext(typeof(SchoolContext))]
-    [Migration("20260131161913_SchoolDb")]
+    [DbContext(typeof(SchoolDbContext))]
+    [Migration("20260205141203_SchoolDb")]
     partial class SchoolDb
     {
         /// <inheritdoc />
@@ -190,6 +190,9 @@ namespace SchoolManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentSubjectPerformanceId"));
 
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateRecorded")
                         .HasColumnType("datetime2");
 
@@ -200,6 +203,9 @@ namespace SchoolManagementSystem.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
