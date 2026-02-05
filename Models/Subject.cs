@@ -10,6 +10,7 @@ namespace SchoolManagementSystem.Models
 
         [Required, StringLength(100)]
         public string SubjectName { get; set; }
+        public bool IsDeleted { get; set; } = false; // false = active, true = deleted
 
         // Navigation
         public ICollection<StudentSubjectPerformance> StudentSubjectPerformances { get; set; }

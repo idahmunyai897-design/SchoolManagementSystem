@@ -12,7 +12,7 @@ using SchoolManagementSystem.Data;
 namespace SchoolManagementSystem.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20260131144422_SchoolDb")]
+    [Migration("20260131161913_SchoolDb")]
     partial class SchoolDb
     {
         /// <inheritdoc />
@@ -33,6 +33,9 @@ namespace SchoolManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MajorId"));
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MajorName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -46,26 +49,31 @@ namespace SchoolManagementSystem.Migrations
                         new
                         {
                             MajorId = 1,
+                            IsDeleted = false,
                             MajorName = "Civil Engineering"
                         },
                         new
                         {
                             MajorId = 2,
+                            IsDeleted = false,
                             MajorName = "Mechanical Engineering"
                         },
                         new
                         {
                             MajorId = 3,
+                            IsDeleted = false,
                             MajorName = "Electrical Engineering"
                         },
                         new
                         {
                             MajorId = 4,
+                            IsDeleted = false,
                             MajorName = "Technical Math & Science"
                         },
                         new
                         {
                             MajorId = 5,
+                            IsDeleted = false,
                             MajorName = "Pure Math & Science"
                         });
                 });
@@ -116,6 +124,9 @@ namespace SchoolManagementSystem.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("MajorId")
                         .HasColumnType("int");
 
@@ -147,6 +158,7 @@ namespace SchoolManagementSystem.Migrations
                             GradeLevel = "10",
                             GuardianContact = "0123456789",
                             GuardianName = "Mary Johnson",
+                            IsDeleted = false,
                             MajorId = 1,
                             Password = "password123",
                             Role = "Student"
@@ -163,6 +175,7 @@ namespace SchoolManagementSystem.Migrations
                             GradeLevel = "10",
                             GuardianContact = "0987654321",
                             GuardianName = "John Smith",
+                            IsDeleted = false,
                             MajorId = 2,
                             Password = "password123",
                             Role = "Student"
@@ -228,6 +241,9 @@ namespace SchoolManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("SubjectName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -241,26 +257,31 @@ namespace SchoolManagementSystem.Migrations
                         new
                         {
                             SubjectId = 1,
+                            IsDeleted = false,
                             SubjectName = "Mathematics"
                         },
                         new
                         {
                             SubjectId = 2,
+                            IsDeleted = false,
                             SubjectName = "Physics"
                         },
                         new
                         {
                             SubjectId = 3,
+                            IsDeleted = false,
                             SubjectName = "Chemistry"
                         },
                         new
                         {
                             SubjectId = 4,
+                            IsDeleted = false,
                             SubjectName = "English"
                         },
                         new
                         {
                             SubjectId = 5,
+                            IsDeleted = false,
                             SubjectName = "Computer Science"
                         });
                 });
@@ -295,6 +316,9 @@ namespace SchoolManagementSystem.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -327,6 +351,7 @@ namespace SchoolManagementSystem.Migrations
                             Email = "james@teacher.com",
                             FullNames = "Mr. James Lee",
                             Grade = "10",
+                            IsDeleted = false,
                             Password = "teach123",
                             Role = "Teacher"
                         });
@@ -356,6 +381,9 @@ namespace SchoolManagementSystem.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -388,6 +416,7 @@ namespace SchoolManagementSystem.Migrations
                             DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "kevin@tutor.com",
                             FullNames = "Mr. Kevin Brown",
+                            IsDeleted = false,
                             Password = "tutor123",
                             Role = "Tutor"
                         });

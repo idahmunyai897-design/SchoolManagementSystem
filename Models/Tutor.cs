@@ -16,6 +16,7 @@ namespace SchoolManagementSystem.Models
 
         [Required, EmailAddress, StringLength(100)]
         public string Email { get; set; }
+        public bool IsDeleted { get; set; } = false; // false = active, true = deleted
 
         [Phone]
         public string PhoneNumber { get; set; }

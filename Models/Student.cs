@@ -39,6 +39,8 @@ namespace SchoolManagementSystem.Models
         public string GradeLevel { get; set; }
         [StringLength(50)]
         public string Role { get; set; } = "Student";
+        public bool IsDeleted { get; set; } = false; // false = active, true = deleted
+
 
         // Grade 10 Major / Track
         public int? MajorId { get; set; }  // Nullable for students not in Grade 10 yet
