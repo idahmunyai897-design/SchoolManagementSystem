@@ -17,10 +17,22 @@ namespace SchoolManagementSystem.Data
         public DbSet<StudentSubjectPerformance> StudentSubjectPerformances { get; set; }
         public DbSet<TutorAssignment> TutorAssignments { get; set; }
         public DbSet<Major> Majors { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Admin>().HasData(
+               new Admin
+               {
+                   AdminId = 1,
+                   FullNames = "Super Admin",
+                   Email = "admin@school.com",
+                   Password = "admin123",
+                   Role = "Admin"
+               }
+           );
 
             // StudentSubjectPerformance: Student ↔ Subject
             modelBuilder.Entity<StudentSubjectPerformance>()
