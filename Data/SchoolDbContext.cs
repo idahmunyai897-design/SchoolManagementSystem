@@ -34,6 +34,16 @@ namespace SchoolManagementSystem.Data
                }
            );
 
+            modelBuilder.Entity<Subject>().HasData(
+                new Subject { SubjectId = 1, SubjectName = "Tshivenda", GradeFrom = 8, GradeTo = 12, RequiresTrack = false },
+                new Subject { SubjectId = 2, SubjectName = "English", GradeFrom = 8, GradeTo = 12, RequiresTrack = false },
+                new Subject { SubjectId = 3, SubjectName = "Life Orientation", GradeFrom = 8, GradeTo = 12, RequiresTrack = false },
+                new Subject { SubjectId = 4, SubjectName = "Mathematics", GradeFrom = 8, GradeTo = 12, RequiresTrack = true },
+                new Subject { SubjectId = 5, SubjectName = "Science (Physical + Chemistry)", GradeFrom = 10, GradeTo = 12, RequiresTrack = true },
+                new Subject { SubjectId = 6, SubjectName = "EGD", GradeFrom = 10, GradeTo = 12, RequiresTrack = false }
+            );
+
+
             // StudentSubjectPerformance: Student ↔ Subject
             modelBuilder.Entity<StudentSubjectPerformance>()
                 .HasOne(ssp => ssp.Student)
@@ -90,14 +100,7 @@ namespace SchoolManagementSystem.Data
                 new Major { MajorId = 5, MajorName = "Pure Math & Science" }
             );
 
-            modelBuilder.Entity<Subject>().HasData(
-                new Subject { SubjectId = 1, SubjectName = "Mathematics" },
-                new Subject { SubjectId = 2, SubjectName = "Physics" },
-                new Subject { SubjectId = 3, SubjectName = "Chemistry" },
-                new Subject { SubjectId = 4, SubjectName = "English" },
-                new Subject { SubjectId = 5, SubjectName = "Computer Science" }
-            );
-
+          
             modelBuilder.Entity<Student>().HasData(
                 new Student
                 {

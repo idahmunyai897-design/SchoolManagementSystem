@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SchoolManagementSystem.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h2>Students</h2>
+
+<table class="table table-bordered table-striped">
+
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Grade</th>
+            <th>Major</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FullNames</td>
+                <td>@item.Email</td>
+                <td>@item.GradeLevel</td>
+                <td>@(item.Major?.MajorName ?? "Not yet")</td>
+
+                <td>
+                    <a asp-action="AutoAssignSubjects"
+                       asp-route-studentId="@item.StudentId"
+                       class="btn btn-success btn-sm">
+                        Auto Assign Subjects
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+

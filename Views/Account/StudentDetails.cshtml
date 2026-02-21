@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Student Details</h3>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="StudentDetails" method="post">
+
+                        <div class="mb-3">
+                            <label>Age</label>
+                            <input name="Age" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Address</label>
+                            <input name="Address" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Guardian Name</label>
+                            <input name="GuardianName" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Guardian Contact</label>
+                            <input name="GuardianContact" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Grade Level</label>
+                            <input name="GradeLevel" class="form-control" required />
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                Complete Registration
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

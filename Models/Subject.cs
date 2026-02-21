@@ -11,6 +11,9 @@ namespace SchoolManagementSystem.Models
         [Required, StringLength(100)]
         public string SubjectName { get; set; }
         public bool IsDeleted { get; set; } = false; // false = active, true = deleted
+        public int GradeFrom { get; set; }
+        public int GradeTo { get; set; }
+        public bool RequiresTrack { get; set; } // true for Math or Science
 
         // Navigation
         public ICollection<StudentSubjectPerformance> StudentSubjectPerformances { get; set; }

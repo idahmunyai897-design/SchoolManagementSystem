@@ -12,7 +12,7 @@ using SchoolManagementSystem.Data;
 namespace SchoolManagementSystem.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20260205141203_SchoolDb")]
+    [Migration("20260212113947_SchoolDb")]
     partial class SchoolDb
     {
         /// <inheritdoc />
@@ -24,6 +24,44 @@ namespace SchoolManagementSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.Admin", b =>
+                {
+                    b.Property<int>("AdminId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullNames")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AdminId");
+
+                    b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            AdminId = 1,
+                            Email = "admin@school.com",
+                            FullNames = "Super Admin",
+                            Password = "admin123",
+                            Role = "Admin"
+                        });
+                });
 
             modelBuilder.Entity("SchoolManagementSystem.Models.Major", b =>
                 {
@@ -247,7 +285,16 @@ namespace SchoolManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
 
+                    b.Property<int>("GradeFrom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GradeTo")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequiresTrack")
                         .HasColumnType("bit");
 
                     b.Property<string>("SubjectName")
@@ -263,32 +310,56 @@ namespace SchoolManagementSystem.Migrations
                         new
                         {
                             SubjectId = 1,
+                            GradeFrom = 8,
+                            GradeTo = 12,
                             IsDeleted = false,
-                            SubjectName = "Mathematics"
+                            RequiresTrack = false,
+                            SubjectName = "Tshivenda"
                         },
                         new
                         {
                             SubjectId = 2,
+                            GradeFrom = 8,
+                            GradeTo = 12,
                             IsDeleted = false,
-                            SubjectName = "Physics"
-                        },
-                        new
-                        {
-                            SubjectId = 3,
-                            IsDeleted = false,
-                            SubjectName = "Chemistry"
-                        },
-                        new
-                        {
-                            SubjectId = 4,
-                            IsDeleted = false,
+                            RequiresTrack = false,
                             SubjectName = "English"
                         },
                         new
                         {
-                            SubjectId = 5,
+                            SubjectId = 3,
+                            GradeFrom = 8,
+                            GradeTo = 12,
                             IsDeleted = false,
-                            SubjectName = "Computer Science"
+                            RequiresTrack = false,
+                            SubjectName = "Life Orientation"
+                        },
+                        new
+                        {
+                            SubjectId = 4,
+                            GradeFrom = 8,
+                            GradeTo = 12,
+                            IsDeleted = false,
+                            RequiresTrack = true,
+                            SubjectName = "Mathematics"
+                        },
+                        new
+                        {
+                            SubjectId = 5,
+                            GradeFrom = 10,
+                            GradeTo = 12,
+                            IsDeleted = false,
+                            RequiresTrack = true,
+                            SubjectName = "Science (Physical + Chemistry)"
+                        },
+                        new
+                        {
+                            SubjectId = 6,
+                            GradeFrom = 10,
+                            GradeTo = 12,
+                            IsDeleted = false,
+                            RequiresTrack = false,
+                            SubjectName = "EGD"
                         });
                 });
 

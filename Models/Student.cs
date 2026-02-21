@@ -40,6 +40,13 @@ namespace SchoolManagementSystem.Models
         [StringLength(50)]
         public string Role { get; set; } = "Student";
         public bool IsDeleted { get; set; } = false; // false = active, true = deleted
+                                                     // Track selections (Grade 10–12)
+        [StringLength(50)]
+        public string MathTrack { get; set; }   // Pure Math / Technical Math
+
+        [StringLength(50)]
+        public string ScienceTrack { get; set; } // Pure Science / Technical Science
+
 
 
         // Grade 10 Major / Track

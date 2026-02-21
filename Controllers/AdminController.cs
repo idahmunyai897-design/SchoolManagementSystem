@@ -236,5 +236,84 @@ namespace SchoolManagementSystem.Controllers
 
             return View();
         }
+
+        // ============================
+        // ASSIGN MAJOR + TRACK
+        // ============================
+
+        public IActionResult AssignMajor(int studentId)
+        {
+            ViewBag.Student = _context.Students.Find(studentId);
+            ViewBag.Majors = _context.Majors.ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AssignMajor(int studentId, int majorId, string mathTrack, string scienceTrack)
+        {
+            var student = _context.Students.Find(studentId);
+
+            if (student != null)
+            {
+                student.MajorId = majorId;
+                student.MathTrack = mathTrack;
+                student.ScienceTrack = scienceTrack;
+
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(Students));
+        }
+
+        public IActionResult AutoAssignSubjects(int studentId)
+        {
+            var student = _context.Students.FirstOrDefault(s => s.StudentId == studentId);
+
+            if (student == null)
+                return RedirectToAction("Students");
+
+            int grade = int.Parse(student.GradeLevel);
+
+            List<Subject> subjects;
+
+            if (grade < 10)
+            {
+                subjects = _context.Subjects
+                    .Where(s => s.GradeFrom <= grade && s.GradeTo >= grade)
+                    .ToList();
+            }
+            else
+            {
+                subjects = _context.Subjects
+                    .Where(s => s.GradeFrom <= grade && s.GradeTo >= grade)
+                    .ToList();
+            }
+
+            foreach (var subject in subjects)
+            {
+                bool exists = _context.StudentSubjectPerformances
+                    .Any(x => x.StudentId == studentId && x.SubjectId == subject.SubjectId);
+
+                if (!exists)
+                {
+                    _context.StudentSubjectPerformances.Add(new StudentSubjectPerformance
+                    {
+                        StudentId = studentId,
+                        SubjectId = subject.SubjectId,
+                        Score = 0,
+                        StudentPerformanceLevel = "Pending",
+                        TeacherPerformanceLevel = "Pending",
+                        DateRecorded = DateTime.Now
+                    });
+                }
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Students");
+        }
+
     }
 }

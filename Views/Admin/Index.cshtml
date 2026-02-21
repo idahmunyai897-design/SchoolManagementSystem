@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<style>
+    .dashboard-container {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+        .stat-card h3 {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .stat-card p {
+            font-size: 28px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+    .management-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+    }
+
+    .manage-btn {
+        display: block;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        text-align: center;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+        .manage-btn:hover {
+            background: #0056b3;
+            color: white;
+        }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    h3.section-title {
+        margin-bottom: 15px;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="dashboard-container">
+
+    <h2>Admin Dashboard</h2>
+
+    <!-- STAT CARDS -->
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <h3>Total Students</h3>
+            <p>@ViewBag.TotalStudents</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Teachers</h3>
+            <p>@ViewBag.TotalTeachers</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Tutors</h3>
+            <p>@ViewBag.TotalTutors</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Subjects</h3>
+            <p>@ViewBag.TotalSubjects</p>
+        </div>
+
+    </div>
+
+    <!-- MANAGEMENT -->
+    <h3 class="section-title">Management</h3>
+
+    <div class="management-grid">
+
+        <a class="manage-btn" asp-controller="Admin" asp-action="Students">Manage Students</a>
+
+        <a class="manage-btn" asp-controller="Admin" asp-action="Teachers">Manage Teachers</a>
+
+        <a class="manage-btn" asp-controller="Admin" asp-action="Tutors">Manage Tutors</a>
+
+        <a class="manage-btn" asp-controller="Admin" asp-action="Subjects">Manage Subjects</a>
+
+        <a class="manage-btn" asp-controller="Admin" asp-action="AssignSubjects">Assign Subjects to Students</a>
+
+        <a class="manage-btn" asp-controller="Admin" asp-action="AssignTutor">Assign Tutor</a>
+
+        <a class="manage-btn" asp-controller="Admin" asp-action="Report">Reports</a>
+
+    </div>
+
+</div>

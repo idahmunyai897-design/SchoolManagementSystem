@@ -9,13 +9,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//// Add Identity for login/authentication
-//builder.Services.AddIdentity<Student, IdentityRole>()
-//    .AddEntityFrameworkStores<SchoolContext>()
-//    .AddDefaultTokenProviders();
+// Register IHttpContextAccessor so it can be injected into views/controllers
+builder.Services.AddHttpContextAccessor();
 
-// Add MVC
+// Add distributed memory cache (required for session)
+builder.Services.AddDistributedMemoryCache();
+
+// Add session support
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
+    options.Cookie.HttpOnly = true;                  // Cookie security
+    options.Cookie.IsEssential = true;              // Essential for GDPR
+});
+
+// Add MVC services
 builder.Services.AddControllersWithViews();
+
+// If you are using Identity (optional)
+// builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+//     .AddEntityFrameworkStores<SchoolDbContext>()
+//     .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -29,14 +43,19 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+// Enable routing
 app.UseRouting();
 
-// Enable Authentication & Authorization
+// Enable session before authorization
+app.UseSession();
+
+// Enable authentication & authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Map default controller route
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

@@ -27,6 +27,7 @@ namespace SchoolManagementSystem.Models
         public string Comments { get; set; }
         public double Score { get; set; }
 
+
         // Navigation
         public Student Student { get; set; }
         public Subject Subject { get; set; }

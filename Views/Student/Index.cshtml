@@ -1,1 +1,105 @@
-﻿
+﻿@using SchoolManagementSystem.Models
+@model SchoolManagementSystem.ViewModel.StudentDashboardViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+    var studentName = HttpContextAccessor.HttpContext.Session.GetString("UserName") ?? Model.Student?.FullNames ?? "Student";
+}
+
+<div class="container mt-5">
+
+    <!-- Welcome Card -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body text-center">
+            <h2 class="card-title">Welcome, @studentName 👋</h2>
+            <p class="card-text">
+                Here’s your personalized dashboard. Track your subjects, performance, tutors, and more!
+            </p>
+            <a class="btn btn-danger" asp-controller="Account" asp-action="Logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- Student Details Card -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            Your Details
+        </div>
+        <div class="card-body">
+            <p><strong>Email:</strong> @Model.Student.Email</p>
+            <p><strong>Grade Level:</strong> @Model.Student.GradeLevel</p>
+            <p><strong>Major:</strong> @(Model.Student.Major?.MajorName ?? "Not selected")</p>
+            <p><strong>Date Enrolled:</strong> @Model.Student.DateEnrolled.ToShortDateString()</p>
+            <p><strong>Guardian:</strong> @Model.Student.GuardianName (@Model.Student.GuardianContact)</p>
+        </div>
+    </div>
+
+    <!-- Subjects & Performance Card -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-success text-white">
+            Your Subjects & Performance
+        </div>
+        <div class="card-body">
+            @if (Model.Performances != null && Model.Performances.Any())
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Score / Performance</th>
+                            <th>Tutor</th>
+                            <th>Peer Helper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ssp in Model.Performances)
+                        {
+                            <tr>
+                                <td>@ssp.Subject.SubjectName</td>
+                                <td>@ssp.Score (@ssp.StudentPerformanceLevel)</td>
+                                <td>
+                                    @{
+                                        var tutor = Model.TutorAssignments
+                                        ?.FirstOrDefault(t => t.SubjectId == ssp.SubjectId)
+                                        ?.Tutor?.FullNames ?? "Not assigned";
+                                    }
+                                    @tutor
+                                </td>
+                                <td>@(ssp.PeerHelper?.FullNames ?? "Not assigned")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>You have not been assigned any subjects or scores yet.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Tutors & Peer Helpers Card -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">
+            Your Tutors & Peer Helpers
+        </div>
+        <div class="card-body">
+            @if (Model.TutorAssignments != null && Model.TutorAssignments.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var ta in Model.TutorAssignments)
+                    {
+                        <li class="list-group-item">
+                            <strong>@ta.Subject.SubjectName:</strong> Tutor - @ta.Tutor.FullNames
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No tutors assigned yet.</p>
+            }
+        </div>
+    </div>
+
+</div>

@@ -21,41 +21,78 @@ namespace SchoolManagementSystem.Controllers
             return View();
         }
 
-        // POST Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel login)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(login);
+
+            // ================= ADMIN LOGIN =================
+            var admin = _context.Admins
+                .FirstOrDefault(a => a.Email == login.Email && a.Password == login.Password);
+
+            if (admin != null)
             {
-                var student = _context.Students
-                    .FirstOrDefault(s => s.Email == login.Email && s.Password == login.Password);
+                HttpContext.Session.SetString("UserEmail", admin.Email);
+                HttpContext.Session.SetString("UserName", admin.FullNames);
+                HttpContext.Session.SetString("UserRole", admin.Role);
 
-                if (student != null)
-                {
-                    if (student.Role == "Admin")
-                        return RedirectToAction("Index", "Admin");
-
-                    return RedirectToAction("Index", "Student");
-                }
-
-                var teacher = _context.Teachers
-                    .FirstOrDefault(t => t.Email == login.Email && t.Password == login.Password);
-
-                if (teacher != null)
-                    return RedirectToAction("Index", "Teacher");
-
-                var tutor = _context.Tutors
-                    .FirstOrDefault(tu => tu.Email == login.Email && tu.Password == login.Password);
-
-                if (tutor != null)
-                    return RedirectToAction("Index", "Tutor");
-
-                ModelState.AddModelError("", "Invalid email or password");
+                return RedirectToAction("Index", "Admin");
             }
 
+            // ================= STUDENT =================
+            var student = _context.Students
+                .FirstOrDefault(s => s.Email == login.Email && s.Password == login.Password);
+
+            if (student != null)
+            {
+                HttpContext.Session.SetString("UserEmail", student.Email);
+                HttpContext.Session.SetString("UserName", student.FullNames);
+                HttpContext.Session.SetString("UserRole", student.Role);
+
+                return RedirectToAction("Index", "Student");
+            }
+
+            // ================= TEACHER =================
+            var teacher = _context.Teachers
+                .FirstOrDefault(t => t.Email == login.Email && t.Password == login.Password);
+
+            if (teacher != null)
+            {
+                HttpContext.Session.SetString("UserEmail", teacher.Email);
+                HttpContext.Session.SetString("UserName", teacher.FullNames);
+                HttpContext.Session.SetString("UserRole", teacher.Role);
+
+                return RedirectToAction("Index", "Teacher");
+            }
+
+            // ================= TUTOR =================
+            var tutor = _context.Tutors
+                .FirstOrDefault(tu => tu.Email == login.Email && tu.Password == login.Password);
+
+            if (tutor != null)
+            {
+                HttpContext.Session.SetString("UserEmail", tutor.Email);
+                HttpContext.Session.SetString("UserName", tutor.FullNames);
+                HttpContext.Session.SetString("UserRole", tutor.Role);
+
+                return RedirectToAction("Index", "Tutor");
+            }
+
+            ModelState.AddModelError("", "Invalid email or password");
             return View(login);
         }
+
+        // GET: Account/Logout
+        public IActionResult Logout()
+        {
+            // Clear session
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Home");
+        }
+
 
         // GET SignUp
         public IActionResult SignUp()
@@ -70,82 +107,76 @@ namespace SchoolManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SignUp(SignUpViewModel model)
         {
-            // Pass roles again if we need to redisplay the form
             ViewBag.Roles = new[] { "Student", "Teacher", "Tutor" };
 
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
 
-            // Make sure a role is selected
             if (string.IsNullOrWhiteSpace(model.Role))
             {
                 ModelState.AddModelError("Role", "Please select a role.");
                 return View(model);
             }
 
-            // Handle registration based on role
+            // Store basic info temporarily
+            TempData["Name"] = model.Name;
+            TempData["Email"] = model.Email;
+            TempData["Password"] = model.Password;
+            TempData["Role"] = model.Role;
+
             switch (model.Role)
             {
                 case "Student":
-                    if (_context.Students.Any(s => s.Email == model.Email))
-                    {
-                        ModelState.AddModelError("", "Email is already registered.");
-                        return View(model);
-                    }
-
-                    _context.Students.Add(new Student
-                    {
-                        FullNames = model.Name,
-                        Email = model.Email,
-                        Password = model.Password,
-                        Role = "Student"
-                    });
-                    break;
+                    return RedirectToAction("StudentDetails");
 
                 case "Teacher":
-                    if (_context.Teachers.Any(t => t.Email == model.Email))
-                    {
-                        ModelState.AddModelError("", "Email is already registered.");
-                        return View(model);
-                    }
-
-                    _context.Teachers.Add(new Teacher
-                    {
-                        FullNames = model.Name,
-                        Email = model.Email,
-                        Password = model.Password,
-                        Role = "Teacher"
-                    });
-                    break;
+                    return RedirectToAction("TeacherDetails");
 
                 case "Tutor":
-                    if (_context.Tutors.Any(tu => tu.Email == model.Email))
-                    {
-                        ModelState.AddModelError("", "Email is already registered.");
-                        return View(model);
-                    }
-
-                    _context.Tutors.Add(new Tutor
-                    {
-                        FullNames = model.Name,
-                        Email = model.Email,
-                        Password = model.Password,
-                        Role = "Tutor"
-                    });
-                    break;
+                    return RedirectToAction("TutorDetails");
 
                 default:
                     ModelState.AddModelError("", "Invalid role selected.");
                     return View(model);
             }
+        }
 
+
+        // GET StudentDetails
+        public IActionResult StudentDetails()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult StudentDetails(int Age, string Address, string GuardianName, string GuardianContact, string GradeLevel)
+        {
+            var student = new Student
+            {
+                FullNames = TempData["Name"].ToString(),
+                Email = TempData["Email"].ToString(),
+                Password = TempData["Password"].ToString(),
+
+                Age = Age,
+                Address = Address,
+                GuardianName = GuardianName,
+                GuardianContact = GuardianContact,
+                GradeLevel = GradeLevel,
+
+                DateEnrolled = DateTime.Now,
+                DateOfBirth = DateTime.Now.AddYears(-Age),
+                Role = "Student"
+            };
+
+            _context.Students.Add(student);
             _context.SaveChanges();
 
-            // Show success message on Login page
             TempData["SuccessMessage"] = "Registration successful! Please log in.";
+
             return RedirectToAction("Login");
         }
+
+
     }
 }

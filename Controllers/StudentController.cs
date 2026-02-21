@@ -18,11 +18,39 @@ namespace SchoolManagementSystem.Controllers
         //View all students together with their Major subject
         public IActionResult Index()
         {
-            var students = _context.Students
-                         .Include(s => s.Major)
-                         .ToList();
+            // Get the logged-in student's email from session
+            var email = HttpContext.Session.GetString("UserEmail");
+            if (string.IsNullOrEmpty(email))
+                return RedirectToAction("Login", "Account");
 
-            return View(students);
+            // Get the student with performances
+            var student = _context.Students
+                .Include(s => s.Major)
+                .Include(s => s.StudentSubjectPerformances)
+                    .ThenInclude(ssp => ssp.Subject)
+                .Include(s => s.StudentSubjectPerformances)
+                    .ThenInclude(ssp => ssp.PeerHelper)
+                .FirstOrDefault(s => s.Email == email);
+
+            if (student == null)
+                return RedirectToAction("Login", "Account");
+
+            // Get tutor assignments for this student
+            var tutorAssignments = _context.TutorAssignments
+                .Where(t => t.StudentId == student.StudentId)
+                .Include(t => t.Tutor)
+                .Include(t => t.Subject)
+                .ToList();
+
+            // Prepare the ViewModel
+            var vm = new ViewModel.StudentDashboardViewModel
+            {
+                Student = student,
+                Performances = student.StudentSubjectPerformances.ToList(),
+                TutorAssignments = tutorAssignments
+            };
+
+            return View(vm);
         }
 
         //View 1 student per 

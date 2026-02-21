@@ -14,6 +14,22 @@ namespace SchoolManagementSystem.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    AdminId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullNames = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.AdminId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Majors",
                 columns: table => new
                 {
@@ -34,7 +50,10 @@ namespace SchoolManagementSystem.Migrations
                     SubjectId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubjectName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    GradeFrom = table.Column<int>(type: "int", nullable: false),
+                    GradeTo = table.Column<int>(type: "int", nullable: false),
+                    RequiresTrack = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -198,6 +217,11 @@ namespace SchoolManagementSystem.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Admins",
+                columns: new[] { "AdminId", "Email", "FullNames", "Password", "Role" },
+                values: new object[] { 1, "admin@school.com", "Super Admin", "admin123", "Admin" });
+
+            migrationBuilder.InsertData(
                 table: "Majors",
                 columns: new[] { "MajorId", "IsDeleted", "MajorName" },
                 values: new object[,]
@@ -211,14 +235,15 @@ namespace SchoolManagementSystem.Migrations
 
             migrationBuilder.InsertData(
                 table: "Subjects",
-                columns: new[] { "SubjectId", "IsDeleted", "SubjectName" },
+                columns: new[] { "SubjectId", "GradeFrom", "GradeTo", "IsDeleted", "RequiresTrack", "SubjectName" },
                 values: new object[,]
                 {
-                    { 1, false, "Mathematics" },
-                    { 2, false, "Physics" },
-                    { 3, false, "Chemistry" },
-                    { 4, false, "English" },
-                    { 5, false, "Computer Science" }
+                    { 1, 8, 12, false, false, "Tshivenda" },
+                    { 2, 8, 12, false, false, "English" },
+                    { 3, 8, 12, false, false, "Life Orientation" },
+                    { 4, 8, 12, false, true, "Mathematics" },
+                    { 5, 10, 12, false, true, "Science (Physical + Chemistry)" },
+                    { 6, 10, 12, false, false, "EGD" }
                 });
 
             migrationBuilder.InsertData(
@@ -284,6 +309,9 @@ namespace SchoolManagementSystem.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admins");
+
             migrationBuilder.DropTable(
                 name: "StudentSubjectPerformances");
 
