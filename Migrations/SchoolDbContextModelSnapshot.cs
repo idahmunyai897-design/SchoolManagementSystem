@@ -187,42 +187,6 @@ namespace SchoolManagementSystem.Migrations
                     b.HasIndex("MajorId");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            StudentId = 1,
-                            Address = "123 Main St",
-                            Age = 16,
-                            DateEnrolled = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(2009, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "alice@student.com",
-                            FullNames = "Alice Johnson",
-                            GradeLevel = "10",
-                            GuardianContact = "0123456789",
-                            GuardianName = "Mary Johnson",
-                            IsDeleted = false,
-                            MajorId = 1,
-                            Password = "password123",
-                            Role = "Student"
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            Address = "456 Oak St",
-                            Age = 16,
-                            DateEnrolled = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(2009, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "bob@student.com",
-                            FullNames = "Bob Smith",
-                            GradeLevel = "10",
-                            GuardianContact = "0987654321",
-                            GuardianName = "John Smith",
-                            IsDeleted = false,
-                            MajorId = 2,
-                            Password = "password123",
-                            Role = "Student"
-                        });
                 });
 
             modelBuilder.Entity("SchoolManagementSystem.Models.StudentSubjectPerformance", b =>
@@ -424,19 +388,6 @@ namespace SchoolManagementSystem.Migrations
                     b.HasKey("TeacherId");
 
                     b.ToTable("Teachers");
-
-                    b.HasData(
-                        new
-                        {
-                            TeacherId = 1,
-                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "james@teacher.com",
-                            FullNames = "Mr. James Lee",
-                            Grade = "10",
-                            IsDeleted = false,
-                            Password = "teach123",
-                            Role = "Teacher"
-                        });
                 });
 
             modelBuilder.Entity("SchoolManagementSystem.Models.Tutor", b =>
@@ -490,18 +441,6 @@ namespace SchoolManagementSystem.Migrations
                     b.HasKey("TutorId");
 
                     b.ToTable("Tutors");
-
-                    b.HasData(
-                        new
-                        {
-                            TutorId = 1,
-                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "kevin@tutor.com",
-                            FullNames = "Mr. Kevin Brown",
-                            IsDeleted = false,
-                            Password = "tutor123",
-                            Role = "Tutor"
-                        });
                 });
 
             modelBuilder.Entity("SchoolManagementSystem.Models.TutorAssignment", b =>

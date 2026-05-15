@@ -26,11 +26,6 @@ builder.Services.AddSession(options =>
 // Add MVC services
 builder.Services.AddControllersWithViews();
 
-// If you are using Identity (optional)
-// builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-//     .AddEntityFrameworkStores<SchoolDbContext>()
-//     .AddDefaultTokenProviders();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
@@ -56,6 +51,6 @@ app.UseAuthorization();
 // Map default controller route
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Home}/{action=index}/{id?}");
 
 app.Run();

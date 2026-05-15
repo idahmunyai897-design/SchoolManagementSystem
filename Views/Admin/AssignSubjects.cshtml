@@ -1,0 +1,63 @@
+﻿=@{
+ViewData["Title"] = "Assign Subjects";
+var students = ViewBag.Students as List<SchoolManagementSystem.Models.Student>;
+var subjects = ViewBag.Subjects as List<SchoolManagementSystem.Models.Subject>;
+}
+
+<h2>Assign Subjects to Student</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form asp-action="AssignSubjects" method="post">
+
+    <div class="form-group">
+        <label>Select Student</label>
+        <select name="studentId" class="form-control" required>
+            <option value="">-- Select Student --</option>
+            @foreach (var s in students)
+            {
+                <option value="@s.StudentId">@s.FullNames</option>
+            }
+        </select>
+    </div>
+
+    <br />
+
+    <h4>Available Subjects</h4>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Subject Name</th>
+                <th>Grade From</th>
+                <th>Grade To</th>
+                <th>Requires Track</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var subject in subjects)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="subjectIds" value="@subject.SubjectId" />
+                    </td>
+                    <td>@subject.SubjectName</td>
+                    <td>@subject.GradeFrom</td>
+                    <td>@subject.GradeTo</td>
+                    <td>@(subject.RequiresTrack ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Assign Subjects</button>
+</form>

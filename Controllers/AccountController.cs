@@ -87,10 +87,8 @@ namespace SchoolManagementSystem.Controllers
         // GET: Account/Logout
         public IActionResult Logout()
         {
-            // Clear session
             HttpContext.Session.Clear();
-
-            return RedirectToAction("Home");
+            return RedirectToAction("Index", "Home");
         }
 
 

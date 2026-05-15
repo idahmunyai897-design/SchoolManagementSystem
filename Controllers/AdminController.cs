@@ -147,37 +147,56 @@ namespace SchoolManagementSystem.Controllers
         // ============================
         // ASSIGN SUBJECTS TO STUDENTS
         // ============================
+        // GET: Admin/AssignSubjects
         public IActionResult AssignSubjects()
         {
-            ViewBag.Students = _context.Students
+            var students = _context.Students
+                .Where(s => !s.IsDeleted)
                 .ToList();
 
-            ViewBag.Subjects = _context.Subjects
+            var subjects = _context.Subjects
+                .Where(s => !s.IsDeleted)
                 .ToList();
+
+            ViewBag.Students = students;
+            ViewBag.Subjects = subjects;
 
             return View();
         }
 
+        // POST: Admin/AssignSubjects
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AssignSubjects(int studentId, int subjectId)
+        public IActionResult AssignSubjects(int studentId, List<int> subjectIds)
         {
-            var exists = _context.StudentSubjectPerformances
-                .Any(s => s.StudentId == studentId && s.SubjectId == subjectId);
-
-            if (!exists)
+            if (studentId == 0 || subjectIds == null || subjectIds.Count == 0)
             {
-                var newAssignment = new StudentSubjectPerformance
-                {
-                    StudentId = studentId,
-                    SubjectId = subjectId,
-                    Score = 0,
-                    Comments = ""
-                };
-                _context.StudentSubjectPerformances.Add(newAssignment);
-                _context.SaveChanges();
+                TempData["Error"] = "Please select a student and at least one subject.";
+                return RedirectToAction("AssignSubjects");
             }
-            return RedirectToAction(nameof(Students));
+
+            // Get already assigned subjects
+            var existingAssignments = _context.StudentSubjectPerformances
+                .Where(x => x.StudentId == studentId)
+                .Select(x => x.SubjectId)
+                .ToList();
+
+            foreach (var subjectId in subjectIds)
+            {
+                if (!existingAssignments.Contains(subjectId))
+                {
+                    _context.StudentSubjectPerformances.Add(new StudentSubjectPerformance
+                    {
+                        StudentId = studentId,
+                        SubjectId = subjectId,
+                        Score = 0 // default starting score
+                    });
+                }
+            }
+
+            _context.SaveChanges();
+
+            TempData["Success"] = "Subjects assigned successfully!";
+            return RedirectToAction("AssignSubjects");
         }
 
         // ============================
@@ -269,7 +288,8 @@ namespace SchoolManagementSystem.Controllers
 
         public IActionResult AutoAssignSubjects(int studentId)
         {
-            var student = _context.Students.FirstOrDefault(s => s.StudentId == studentId);
+            var student = _context.Students
+                .FirstOrDefault(s => s.StudentId == studentId);
 
             if (student == null)
                 return RedirectToAction("Students");

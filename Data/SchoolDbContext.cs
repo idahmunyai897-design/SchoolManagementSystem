@@ -35,12 +35,29 @@ namespace SchoolManagementSystem.Data
            );
 
             modelBuilder.Entity<Subject>().HasData(
+                // Grade 8 - 12 Compa...
                 new Subject { SubjectId = 1, SubjectName = "Tshivenda", GradeFrom = 8, GradeTo = 12, RequiresTrack = false },
                 new Subject { SubjectId = 2, SubjectName = "English", GradeFrom = 8, GradeTo = 12, RequiresTrack = false },
                 new Subject { SubjectId = 3, SubjectName = "Life Orientation", GradeFrom = 8, GradeTo = 12, RequiresTrack = false },
-                new Subject { SubjectId = 4, SubjectName = "Mathematics", GradeFrom = 8, GradeTo = 12, RequiresTrack = true },
-                new Subject { SubjectId = 5, SubjectName = "Science (Physical + Chemistry)", GradeFrom = 10, GradeTo = 12, RequiresTrack = true },
-                new Subject { SubjectId = 6, SubjectName = "EGD", GradeFrom = 10, GradeTo = 12, RequiresTrack = false }
+
+                // Grade 8 - 9
+                new Subject { SubjectId = 4, SubjectName = "History", GradeFrom = 8, GradeTo = 9, RequiresTrack = false },
+                new Subject { SubjectId = 5, SubjectName = "Creative Arts", GradeFrom = 8, GradeTo = 9, RequiresTrack = false },
+                new Subject { SubjectId = 6, SubjectName = "Geography", GradeFrom = 8, GradeTo = 9, RequiresTrack = false },
+                new Subject { SubjectId = 7, SubjectName = "Natural Science", GradeFrom = 8, GradeTo = 9, RequiresTrack = false },
+                new Subject { SubjectId = 8, SubjectName = "Mathematics", GradeFrom = 8, GradeTo = 9, RequiresTrack = true },
+
+                // Grade 10 - 12
+                new Subject { SubjectId = 9, SubjectName = "Pure Mathematics", GradeFrom = 10, GradeTo = 12, RequiresTrack = true },
+                new Subject { SubjectId = 10, SubjectName = "Technical Mathematics", GradeFrom = 10, GradeTo = 12, RequiresTrack = true },
+                new Subject { SubjectId = 11, SubjectName = "Pysical Science", GradeFrom = 10, GradeTo = 12, RequiresTrack = true },
+                new Subject { SubjectId = 12, SubjectName = "EGD", GradeFrom = 10, GradeTo = 12, RequiresTrack = false },
+
+
+                // --- Engineering Majors ---
+                new Subject { SubjectId = 13, SubjectName = "Civil Technology", GradeFrom = 10, GradeTo = 12, RequiresTrack = true },
+                new Subject { SubjectId = 14, SubjectName = "Mechanical Technology", GradeFrom = 10, GradeTo = 12, RequiresTrack = true },
+                new Subject { SubjectId = 15, SubjectName = "Electrical Technology", GradeFrom = 10, GradeTo = 12, RequiresTrack = true }
             );
 
 
@@ -98,65 +115,6 @@ namespace SchoolManagementSystem.Data
                 new Major { MajorId = 3, MajorName = "Electrical Engineering" },
                 new Major { MajorId = 4, MajorName = "Technical Math & Science" },
                 new Major { MajorId = 5, MajorName = "Pure Math & Science" }
-            );
-
-          
-            modelBuilder.Entity<Student>().HasData(
-                new Student
-                {
-                    StudentId = 1,
-                    FullNames = "Alice Johnson",
-                    Email = "alice@student.com",
-                    Password = "password123",
-                    Age = 16,
-                    DateOfBirth = new DateTime(2009, 2, 15),
-                    Address = "123 Main St",
-                    DateEnrolled = new DateTime(2024, 1, 15),
-                    GuardianName = "Mary Johnson",
-                    GuardianContact = "0123456789",
-                    GradeLevel = "10",
-                    MajorId = 1,
-                    Role = "Student"
-                },
-                new Student
-                {
-                    StudentId = 2,
-                    FullNames = "Bob Smith",
-                    Email = "bob@student.com",
-                    Password = "password123",
-                    Age = 16,
-                    DateOfBirth = new DateTime(2009, 6, 10),
-                    Address = "456 Oak St",
-                    DateEnrolled = new DateTime(2024, 1, 15),
-                    GuardianName = "John Smith",
-                    GuardianContact = "0987654321",
-                    GradeLevel = "10",
-                    MajorId = 2,
-                    Role = "Student"
-                }
-            );
-
-            modelBuilder.Entity<Teacher>().HasData(
-                new Teacher
-                {
-                    TeacherId = 1,
-                    FullNames = "Mr. James Lee",
-                    Email = "james@teacher.com",
-                    Password = "teach123",
-                    Grade = "10",
-                    Role = "Teacher"
-                }
-            );
-
-            modelBuilder.Entity<Tutor>().HasData(
-                new Tutor
-                {
-                    TutorId = 1,
-                    FullNames = "Mr. Kevin Brown",
-                    Email = "kevin@tutor.com",
-                    Password = "tutor123",
-                    Role = "Tutor"
-                }
             );
         }
     }

@@ -1,42 +1,78 @@
-﻿@model IEnumerable<SchoolManagementSystem.Models.Student>
+﻿@model SchoolManagementSystem.Models.Student
 
 @{
-    ViewData["Title"] = "Students";
+    ViewData["Title"] = "Assign Major";
+    var majors = ViewBag.Majors as List<SchoolManagementSystem.Models.Major>;
 }
 
-<h2>Students</h2>
+<div class="container mt-4">
+    <h2 class="mb-3">Assign Major to @Model.FullNames</h2>
+    <p class="text-muted mb-4">Select one of the available majors below.</p>
 
-<table class="table table-bordered table-striped">
+    <form asp-action="AssignMajor" method="post">
+        <input type="hidden" name="studentId" value="@Model.StudentId" />
 
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Grade</th>
-            <th>Major</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+        <div class="row">
 
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.FullNames</td>
-                <td>@item.Email</td>
-                <td>@item.GradeLevel</td>
-                <td>@(item.Major?.MajorName ?? "Not yet")</td>
+            @foreach (var major in majors)
+            {
+                <div class="col-md-4 mb-4">
+                    <label style="width: 100%;">
+                        <input type="radio" name="majorId" value="@major.MajorId" class="d-none major-radio" />
 
-                <td>
-                    <a asp-action="AutoAssignSubjects"
-                       asp-route-studentId="@item.StudentId"
-                       class="btn btn-success btn-sm">
-                        Auto Assign Subjects
-                    </a>
-                </td>
-            </tr>
+                        <div class="card major-card shadow-sm h-100 text-center p-3">
+                            <div class="card-body">
+                                <h5 class="card-title">@major.MajorName</h5>
+                                <p class="text-muted small">Click to select this major</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            }
+
+        </div>
+
+        <hr />
+
+        <!-- TRACK OPTIONS (only for Grade 10–12) -->
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label class="form-label">Math Track</label>
+                <select name="mathTrack" class="form-select" required>
+                    <option value="">-- Select --</option>
+                    <option value="Pure Math">Pure Math</option>
+                    <option value="Technical Math">Technical Math</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Science Track</label>
+                <select name="scienceTrack" class="form-select" required>
+                    <option value="">-- Select --</option>
+                    <option value="Pure Science">Pure Science</option>
+                    <option value="Technical Science">Technical Science</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-4">Save Major</button>
+    </form>
+</div>
+
+<style>
+    .major-card {
+        cursor: pointer;
+        transition: 0.2s;
+        border: 2px solid transparent;
+    }
+
+        .major-card:hover {
+            transform: scale(1.03);
+            border-color: #0d6efd;
         }
-    </tbody>
 
-</table>
-
+    .major-radio:checked + .major-card {
+        border-color: #198754;
+        background-color: #e9fbe9;
+    }
+</style>

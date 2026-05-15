@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SchoolManagementSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class SchoolDb : Migration
+    public partial class RemoveSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -123,6 +123,8 @@ namespace SchoolManagementSystem.Migrations
                     GradeLevel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Role = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    MathTrack = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ScienceTrack = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     MajorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -244,25 +246,6 @@ namespace SchoolManagementSystem.Migrations
                     { 4, 8, 12, false, true, "Mathematics" },
                     { 5, 10, 12, false, true, "Science (Physical + Chemistry)" },
                     { 6, 10, 12, false, false, "EGD" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Teachers",
-                columns: new[] { "TeacherId", "Address", "DateJoined", "Email", "FullNames", "Grade", "IsDeleted", "Password", "PhoneNumber", "Qualification", "Role", "Specialization" },
-                values: new object[] { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "james@teacher.com", "Mr. James Lee", "10", false, "teach123", null, null, "Teacher", null });
-
-            migrationBuilder.InsertData(
-                table: "Tutors",
-                columns: new[] { "TutorId", "Address", "DateJoined", "Email", "FullNames", "IsDeleted", "Password", "PhoneNumber", "Qualification", "Role", "Specialization" },
-                values: new object[] { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "kevin@tutor.com", "Mr. Kevin Brown", false, "tutor123", null, null, "Tutor", null });
-
-            migrationBuilder.InsertData(
-                table: "Students",
-                columns: new[] { "StudentId", "Address", "Age", "DateEnrolled", "DateOfBirth", "Email", "FullNames", "GradeLevel", "GuardianContact", "GuardianName", "IsDeleted", "MajorId", "Password", "Role" },
-                values: new object[,]
-                {
-                    { 1, "123 Main St", 16, new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2009, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "alice@student.com", "Alice Johnson", "10", "0123456789", "Mary Johnson", false, 1, "password123", "Student" },
-                    { 2, "456 Oak St", 16, new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2009, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "bob@student.com", "Bob Smith", "10", "0987654321", "John Smith", false, 2, "password123", "Student" }
                 });
 
             migrationBuilder.CreateIndex(
