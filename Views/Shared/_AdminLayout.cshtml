@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Dashboard</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Font Awesome (icons) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            background: #f4f6f9;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: #111827;
+            position: fixed;
+            color: white;
+            padding-top: 20px;
+        }
+
+            .sidebar h4 {
+                text-align: center;
+                margin-bottom: 20px;
+                font-weight: 600;
+            }
+
+            .sidebar a {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 20px;
+                color: #cbd5e1;
+                text-decoration: none;
+                transition: 0.2s;
+            }
+
+                .sidebar a:hover {
+                    background: #1f2937;
+                    color: white;
+                    border-left: 4px solid #3b82f6;
+                }
+
+        /* MAIN AREA */
+        .main {
+            margin-left: 260px;
+            padding: 20px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        /* CARDS */
+        .stat-card {
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <h4>School Admin</h4>
+
+        <a asp-controller="Admin" asp-action="Index">
+            <i class="fa fa-chart-line"></i> Dashboard
+        </a>
+
+        <a asp-controller="Student" asp-action="Index">
+            <i class="fa fa-user-graduate"></i> Students
+        </a>
+
+        <a asp-controller="Teacher" asp-action="Index">
+            <i class="fa fa-chalkboard-teacher"></i> Teachers
+        </a>
+
+        <a asp-controller="Tutor" asp-action="Index">
+            <i class="fa fa-user-tie"></i> Tutors
+        </a>
+
+        <a asp-controller="Subject" asp-action="Index">
+            <i class="fa fa-book"></i> Subjects
+        </a>
+
+        <a asp-controller="Admin" asp-action="Report">
+            <i class="fa fa-chart-pie"></i> Reports
+        </a>
+
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <h5 class="m-0">@ViewData["Title"]</h5>
+            <div>
+                <i class="fa fa-user-circle"></i> Admin
+            </div>
+        </div>
+
+        @RenderBody()
+
+    </div>
+
+</body>
+</html>

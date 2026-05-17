@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- SUMMARY CARDS -->
+<div class="row g-3">
+
+    <div class="col-md-3">
+        <div class="stat-card bg-primary">
+            <h6>Total Students</h6>
+            <h3>@ViewBag.TotalStudents</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card bg-success">
+            <h6>Total Teachers</h6>
+            <h3>@ViewBag.TotalTeachers</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card bg-warning">
+            <h6>Total Tutors</h6>
+            <h3>@ViewBag.TotalTutors</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="stat-card bg-danger">
+            <h6>Total Subjects</h6>
+            <h3>@ViewBag.TotalSubjects</h3>
+        </div>
+    </div>
+
+</div>
+
+<!-- SPACING -->
+<div class="mt-4"></div>
+
+<!-- INSIGHTS SECTION -->
+<div class="card shadow-sm p-3">
+
+    <h5>📊 Performance Insights</h5>
+
+    <hr />
+
+    <div class="alert alert-warning">
+        ⚠ Weak Students (Score below 50):
+        <strong>@ViewBag.WeakStudents</strong>
+    </div>
+
+    <p class="text-muted">
+        This report helps identify students who may need extra academic support.
+        You can use this data to assign tutors or improve performance tracking.
+    </p>
+
+</div>
